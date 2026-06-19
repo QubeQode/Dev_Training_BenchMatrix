@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementTask\\LibraryManagementTask.csproj": {}
+    "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementAPI\\LibraryManagementAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementTask\\LibraryManagementTask.csproj": {
+    "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementAPI\\LibraryManagementAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementTask\\LibraryManagementTask.csproj",
-        "projectName": "LibraryManagementTask",
-        "projectPath": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementTask\\LibraryManagementTask.csproj",
+        "projectUniqueName": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementAPI\\LibraryManagementAPI.csproj",
+        "projectName": "LibraryManagementAPI",
+        "projectPath": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementAPI\\LibraryManagementAPI.csproj",
         "packagesPath": "C:\\Users\\moham\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementTask\\obj\\",
+        "outputPath": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\moham\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -42,6 +42,16 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[8.0.28, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.6.2, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -54,6 +64,9 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
