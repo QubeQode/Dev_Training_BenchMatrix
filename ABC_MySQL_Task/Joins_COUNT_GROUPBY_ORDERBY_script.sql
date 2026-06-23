@@ -83,3 +83,23 @@ GROUP BY
 ORDER BY
 	d.department_name,
     p.project_name;
+    
+/*
+Query where you recieve a list of employers which have department != manager's department
+*/
+
+SELECT
+	CONCAT(e.first_name, ' ', e.last_name) AS employee_name,
+    e.manager_id
+FROM Employees e
+-- Something here
+WHERE
+
+-- Personal Research
+/*
+JOINS
+WHERE
+GROUP BY
+ORDER BY
+Understand use cases and when they come up
+*/
