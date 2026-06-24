@@ -10,23 +10,30 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Using DI to register auth services with auth scheme "Bearer" - Teaches ASP.NET to handle [Authorize]
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+
+    // Register JWT Bearer Handler and configure how auth works
     .AddJwtBearer(options =>
     {
+        // Read secret key from config in appsettings.json
         var secret = builder.Configuration["Jwt:SecretKey"]
             ?? throw new InvalidOperationException("JWT Secret not configured.");
         
+        // Configure token validation so ASP.NET knows exactly how to verify incoming JWTs
         options.TokenValidationParameters = new TokenValidationParameters
         {
-            ValidateIssuerSigningKey = true,
-            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)),
+            ValidateIssuerSigningKey = true, // Verify token signed with expected key
+            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret)), // Used to verify JWT Signature
             ValidateIssuer = false,
             ValidateAudience = false,
-            ClockSkew = TimeSpan.Zero
+            ClockSkew = TimeSpan.Zero // No tolerance after token expires
         };
 
+        // Configure Authentication Events
         options.Events = new JwtBearerEvents
         {
+            // Runs when authentication fails - customize output
             OnChallenge = async context =>
             {
                 context.HandleResponse();
@@ -44,6 +51,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 );
             },
 
+            // Runs when authentication fails but authorization succeeds - customize output
             OnForbidden = async context =>
             {
                 context.Response.StatusCode = 403;
@@ -59,7 +67,8 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 );
             }
         };
-    });
+    }
+);
 
 builder.Services.AddAuthorization();
 
