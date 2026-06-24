@@ -25,6 +25,10 @@ public class BookUpdateDTO
     [Range(1, 10000)] // Disallow a 0 page book
     public int PageCount { get; set; }
 
+    // ISBN range from 13-17 digits depending on age and including dashes
+    [StringLength(17, MinimumLength = 13)]
+    public string? Isbn { get; set; }
+
     [Required]
     public int AuthorId { get; set; }
 }

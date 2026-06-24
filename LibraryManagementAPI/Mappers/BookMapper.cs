@@ -28,6 +28,7 @@ public static class BookMapper
           Title = dto.Title,
           Year = dto.Year,
           PageCount = dto.PageCount,
+          Isbn = dto.Isbn,
           AuthorId = dto.AuthorId  
         };
     }
@@ -37,6 +38,7 @@ public static class BookMapper
         book.Title = dto.Title;
         book.Year = dto.Year;
         book.PageCount = dto.PageCount;
+        book.Isbn = dto.Isbn;
         book.AuthorId = dto.AuthorId;
     }
 
@@ -48,6 +50,7 @@ public static class BookMapper
             Title = book.Title,
             Year = book.Year,
             PageCount = book.PageCount,
+            Isbn = book.Isbn,
             AuthorId = book.AuthorId
         };
     }

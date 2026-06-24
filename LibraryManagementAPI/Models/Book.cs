@@ -12,6 +12,8 @@ public class Book
 
     public int PageCount { get; set; }
 
+    public string? Isbn { get; set; } // Nullable because seed data doesn't have Isbn
+
     public int AuthorId { get; set; }
 
     public Author? Author { get; set; }

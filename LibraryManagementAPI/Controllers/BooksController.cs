@@ -1,11 +1,12 @@
 using LibraryManagementAPI.DTOs;
 using LibraryManagementAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryManagementAPI.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/[controller]")] // useRouting() used for this routing functionality
 public class BooksController : ControllerBase
 {
     private readonly IBookService _bookService;
@@ -17,6 +18,7 @@ public class BooksController : ControllerBase
         _bookService = bookService;
     }
 
+    [Authorize]
     [HttpGet] // <-- This is the routing layer
     public async Task<ActionResult<IEnumerable<BookResponseDTO>>> GetAll
     (
@@ -34,6 +36,7 @@ public class BooksController : ControllerBase
         return Ok(books);
     }
 
+    [Authorize]
     [HttpGet("{id}")] // <-- Autobinding on the ID portion of the uri
     public async Task <ActionResult<BookResponseDTO>> GetById(int id)
     {
@@ -42,6 +45,7 @@ public class BooksController : ControllerBase
         return Ok(book);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPost]
     public async Task<ActionResult<BookResponseDTO>> Create(BookCreateDTO dto)
     {
@@ -56,6 +60,7 @@ public class BooksController : ControllerBase
         );
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpPut("{id}")]
     public async Task<ActionResult<BookResponseDTO>> Update(int id, BookUpdateDTO dto)
     {
@@ -64,6 +69,7 @@ public class BooksController : ControllerBase
         return Ok(updatedBook);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

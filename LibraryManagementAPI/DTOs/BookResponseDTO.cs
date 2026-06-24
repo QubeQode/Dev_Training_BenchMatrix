@@ -19,5 +19,7 @@ public record BookResponseDTO
 
     public int PageCount { get; init; }
 
+    public string? Isbn { get; set; }
+
     public int AuthorId { get; init; }
 }

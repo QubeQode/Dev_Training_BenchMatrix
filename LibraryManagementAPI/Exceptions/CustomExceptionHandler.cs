@@ -42,6 +42,22 @@ public class CustomExceptionHandler : IExceptionHandler
             return true;
         }
 
+        if (exception is InvalidLoginException)
+        {
+            httpContext.Response.StatusCode = StatusCodes.Status401Unauthorized;
+
+            var ProblemDetails = new ProblemDetails
+            {
+                Title = "Invalid Credentials",
+                Detail = exception.Message,
+                Status = StatusCodes.Status401Unauthorized
+            };
+
+            await httpContext.Response.WriteAsJsonAsync(ProblemDetails, cancellationToken);
+
+            return true;
+        }
+
         return false;
     }
 }
