@@ -51,7 +51,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 );
             },
 
-            // Runs when authentication fails but authorization succeeds - customize output
+            // Runs when authorization fails but authentication succeeds - customize output
             OnForbidden = async context =>
             {
                 context.Response.StatusCode = 403;
@@ -84,27 +84,31 @@ builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 
+// Configure swagger generation
 builder.Services.AddSwaggerGen(options =>
 {
+    // Define a security scheme - how should clients authenticate when calling this API?
     var securityScheme = new OpenApiSecurityScheme
     {
-        Name = "Authorization",
+        Name = "Authorization", // Header name that holds authentication value
         Description = "Enter JWT Bearer token.",
-        In = ParameterLocation.Header,
-        Type = SecuritySchemeType.Http,
+        In = ParameterLocation.Header, // Should be sent in a HTTP header
+        Type = SecuritySchemeType.Http, // Auth mechanism is part of HTTP protocol
         Scheme = "bearer",
         BearerFormat = "JWT",
-        Reference = new OpenApiReference
+        Reference = new OpenApiReference // Give security scheme a uniquely named resuable component
         {
-            Id = JwtBearerDefaults.AuthenticationScheme,
-            Type = ReferenceType.SecurityScheme
+            Id = JwtBearerDefaults.AuthenticationScheme, // Resolves to "bearer"
+            Type = ReferenceType.SecurityScheme // Tells swagger reference points to a security scheme
         }
     };
 
+    // Register security scheme to the OpenAPI document
     options.AddSecurityDefinition(securityScheme.Reference.Id, securityScheme);
+    // make registered security scheme required - endpoints might use this security scheme
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
-        {securityScheme, new string[] { }}
+        {securityScheme, new string[] { }} // Use defined security scheme
     });  
 });
 
