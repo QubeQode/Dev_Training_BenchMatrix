@@ -9,3 +9,9 @@
         CalculateFee(TimeSpan duration) => Math.Ceiling(duration.TotalDays) * 500;
     - FlatFeeStrategy => 200;
 */
+namespace ParkingManagementAPI.Services;
+
+public interface IFeeStrategy
+{
+    decimal CalculateFee(TimeSpan duration);
+}

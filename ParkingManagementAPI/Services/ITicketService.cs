@@ -13,3 +13,20 @@
         - Assign value to totalFee
         - Return closedTicket entity
 */
+using ParkingManagementAPI.Models;
+
+namespace ParkingManagementAPI.Services;
+
+public interface ITicketService
+{
+    ParkingTicket CreateTicketAsync(
+        Vehicle vehicle,
+        ParkingSpot parkingSpot,
+        FeeStrategyType feeStrategyType
+    );
+
+    ParkingTicket CloseTicketAsync(
+        ParkingTicket parkingTicket,
+        decimal totalFee
+    );
+}
