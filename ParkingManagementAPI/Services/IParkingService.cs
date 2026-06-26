@@ -2,6 +2,7 @@
     Orchestrator Service:
     - Handle Parking Event
         - Receive parking requests
+        - Call VehicleService to locate or generate vehicle entity
         - Call SpotAssignmentService for free spot
         - Call TicketService for ticket creation
         - Occupy spot -

@@ -46,6 +46,9 @@ public class CustomExceptionHandler : IExceptionHandler
             
             VehicleDoesNotFitException =>
                 (StatusCodes.Status400BadRequest, "Vehicle Does Not Fit Parking Spot"),
+
+            InvalidVehicleTypeException =>
+                (StatusCodes.Status400BadRequest, "Vehicle Type Does Not Exist"),
             
             _ =>
                 (StatusCodes.Status500InternalServerError, "Internal Server Error")

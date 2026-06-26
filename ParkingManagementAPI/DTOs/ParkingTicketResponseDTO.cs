@@ -3,24 +3,13 @@ using ParkingManagementAPI.Models;
 
 namespace ParkingManagementAPI.DTOs;
 
-public enum ParkingSpotType
-{
-    Compact,
-    Handicapped,
-    Large
-}
-
 public class ParkingTicketResponseDTO
 {
     public int TicketId { get; init; }
 
-    public string LicensePlate { get; init; } = string.Empty;
-
     public int FloorNumber { get; init; }
 
     public string ParkingSpotName { get; init; } = string.Empty;
-
-    public ParkingSpotType SpotType { get; init; }
 
     public DateTime TimeOfIssuance { get; init; }
 

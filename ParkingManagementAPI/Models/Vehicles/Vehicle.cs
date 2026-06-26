@@ -6,7 +6,7 @@ public abstract class Vehicle
 {
     public int VehicleId { get; set; }
 
-    public string LicensePlate { get; private set; } = string.Empty;
+    public string LicensePlate { get; set; } = string.Empty;
 
     public string Make { get; set; } = string.Empty;
 
