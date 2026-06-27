@@ -45,6 +45,15 @@ public class TicketRepository : ITicketRepository
             .ToListAsync();
     }
 
+    public async Task<bool> HasOpenTicketAsync(int vehicleId)
+    {
+        return await _context.ParkingTickets
+            .AnyAsync(t =>
+                t.VehicleId == vehicleId &&
+                t.TimeOfConclusion == null
+            );
+    }
+
     public async Task<IEnumerable<ParkingTicket>> GetVehicleHistoryAsync(string licensePlate)
     {
         return await _context.ParkingTickets

@@ -2,6 +2,7 @@ using ParkingManagementAPI.Data;
 using ParkingManagementAPI.DTOs;
 using ParkingManagementAPI.Exceptions;
 using ParkingManagementAPI.Mappers;
+using ParkingManagementAPI.Models;
 using ParkingManagementAPI.Repositories;
 
 namespace ParkingManagementAPI.Services;
@@ -101,6 +102,13 @@ public class ParkingService : IParkingService
 
     public async Task<IEnumerable<ParkingTicketResponseDTO>> GetVehicleHistoryAsync(string licensePlate)
     {
+        var vehicle =  await _vehicleRepository.GetByLicensePlateAsync(licensePlate);
+
+        if (vehicle is null)
+        {
+            throw new VehicleNotFoundException(licensePlate);
+        }
+
         var tickets = await _ticketRepository.GetVehicleHistoryAsync(licensePlate);
 
         return tickets.Select(ParkingMapper.ToResponse);

@@ -16,6 +16,13 @@ public class SpotAssignmentService : ISpotAssignmentService
     public async Task<ParkingSpot> FindAvailableSpotAsync(Vehicle vehicle)
     {
         var availableSpots = await _parkingSpotRepository.GetAllAsync();
+
+        bool compatibleSpotExists = availableSpots.Any(s => s.AcceptableVehicle(vehicle));
+
+        if (!compatibleSpotExists)
+        {
+            throw new VehicleDoesNotFitException(vehicle.LicensePlate);
+        }
         
         var parkableSpot = availableSpots
             .Where(s => !s.IsOccupied)

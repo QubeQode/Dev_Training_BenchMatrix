@@ -10,6 +10,8 @@ public interface ITicketRepository
 
     Task<IEnumerable<ParkingTicket>> GetActiveTicketsAsync();
 
+    Task<bool> HasOpenTicketAsync(int vehicleId);
+
     Task<IEnumerable<ParkingTicket>> GetVehicleHistoryAsync(string licensePlate);
 
     Task AddAsync(ParkingTicket ticket);
