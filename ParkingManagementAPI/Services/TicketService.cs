@@ -32,7 +32,6 @@ public class TicketService : ITicketService
             throw new TicketAlreadyClosedException(parkingTicket.ParkingTicketId);
         }
 
-        parkingTicket.TimeOfConclusion = DateTime.UtcNow;
         parkingTicket.TotalFee = totalFee;
 
         return Task.CompletedTask;
