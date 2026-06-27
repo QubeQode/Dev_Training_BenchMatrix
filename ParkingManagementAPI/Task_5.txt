@@ -1,0 +1,220 @@
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+RELATIONSHIPS - MODEL ENTITIES
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ParkingLot
+│
+└── Floor (1:N Parking Lot)
+   │
+   └── ParkingSpot (1:N Floor, 1:N Parking Ticket) - Abstract Base Class - Inherited By:
+       ├── CompactSpot - AcceptableVehicle(vehicle is Motorcycle || vehicle is Car)
+       ├── LargeSpot - AcceptableVehicle(vehicle is Truck)
+       └── HandicappedSpot - AcceptableVehicle(vehicle is Motorcycle || vehicle is Car && vehicle.PassengerIsHandicapped)
+
+Every ParkingLot:
+├── int ParkingLotId (Surrogate PK)
+├── string ParkingLotName
+├── string Address
+└── ICollection<Floor> Floors
+
+Every Floor:
+├── int FloorId (PK)
+├── int FloorNumber
+├── int ParkingLotId (FK)
+├── ParkingLot ParkingLot (Nav Property)
+└── ICollection<ParkingSpot> ParkingSpots 
+
+Every ParkingSpot:
+├── int ParkingSpotId (PK)
+├── string ParkingSpotName (E.g. A01)
+├── int FloorId (FK)
+├── Floor Floor (Nav Property)
+├── bool IsOccupied (private set)
+├── ICollection<ParkingTicket> TicketHistory (ICollection<ParkingTicket>)
+├── void OccupySpot(IsOccupied = true)
+├── void FreeSpot(IsOccupied = false)
+└── abstract bool AcceptableVehicle()
+
+      ──────────────────────────────────────────────────────────────────────────────────
+
+Vehicle (1:N Parking Ticket) - Abstract Base Class - Inherited By:
+├── Motorcycle
+├── Car
+└── Truck
+
+Every Vehicle:
+├── int VehicleId (PK)
+├── string LicensePlate
+├── string Make
+├── string Model
+├── bool PassengerIsHandicapped
+└── ICollection<ParkingTicket> TicketHistory
+
+      ──────────────────────────────────────────────────────────────────────────────────
+
+ParkingTicket (Joining Table for Vehicle + Parking Spot)
+├── int ParkingTicketId (PK)
+├── int VehicleId (FK)
+├── Vehicle Vehicle (Nav Property)
+├── int ParkingSpotId (FK)
+├── ParkingSpot ParkingSpot (Nav Property)
+├── DateTime TimeOfIssuance
+├── DateTime? TimeOfConclusion? (Nullable because could still be in progress)
+├── decimal? TotalFee? (Nullable because could still be in progress)
+├── FeeStrategyType (Hourly, Daily, Flat as Enum)
+└── bool IsOpen => TimeOfConclusion == null
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+DTOS + MAPPER
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ParkingTicketResponseDTO - { get; init; } on all fields instead of { get; set; }
+├── int TicketId
+├── int FloorNumber
+├── string ParkingSpotName
+├── DateTime TimeOfIssuance
+├── DateTime? TimeOfConclusion
+├── decimal? TotalFee
+├── FeeStrategyType
+└── bool IsOpen
+
+ParkVehicleRequestDTO - references Enum VehicleType { Motorcycle, Car, Truck }
+├── string LicensePlate [Required]
+├── string Make
+├── string Model
+├── bool PassengerIsHandicapped [Required]
+├── VehicleType VehicleType [Required]
+└── FeeStrategyType [Required]
+
+ParkingMapper
+│
+├── ToVehicle(ParkVehicleRequestDTO): return dto.VehicleType switch
+│   │
+│   ├── VehicleType.Car
+│   │   └── Car
+│   │       ├── LicensePlate ← DTO.LicensePlate
+│   │       ├── Make ← DTO.Make
+│   │       ├── Model ← DTO.Model
+│   │       └── PassengerIsHandicapped ← DTO.PassengerIsHandicapped
+│   │
+│   ├── VehicleType.Motorcycle
+│   │   └── Motorcycle
+│   │       ├── LicensePlate ← DTO.LicensePlate
+│   │       ├── Make ← DTO.Make
+│   │       ├── Model ← DTO.Model
+│   │       └── PassengerIsHandicapped ← DTO.PassengerIsHandicapped
+│   │
+│   ├── VehicleType.Truck
+│   │   └── Truck
+│   │       ├── LicensePlate ← DTO.LicensePlate
+│   │       ├── Make ← DTO.Make
+│   │       ├── Model ← DTO.Model
+│   │       └── PassengerIsHandicapped ← DTO.PassengerIsHandicapped
+│   │
+│   └── Invalid VehicleType
+│       └── InvalidVehicleTypeException
+│
+└── ToResponse(ParkingTicket)
+    │
+    └── return new ParkingTicketResponseDTO
+        ├── TicketId ← ParkingTicket.ParkingTicketId
+        ├── FloorNumber ← ParkingSpot.Floor.FloorNumber
+        ├── ParkingSpotName ← ParkingSpot.ParkingSpotName
+        ├── TimeOfIssuance ← ParkingTicket.TimeOfIssuance
+        ├── TimeOfConclusion ← ParkingTicket.TimeOfConclusion
+        ├── TotalFee ← ParkingTicket.TotalFee
+        ├── FeeStrategyType ← ParkingTicket.FeeStrategyType
+        └── IsOpen ← ParkingTicket.IsOpen
+
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+SERVICE FLOW
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ParkingService - Application Orchestrator
+│
+├── Dependencies
+│   │
+│   ├── VehicleRepository
+│   ├── TicketRepository
+│   ├── ParkingSpotRepository
+│   │
+│   ├── VehicleService
+│   ├── SpotAssignmentService
+│   ├── TicketService
+│   └── ParkingFeeService
+│   
+├── Handle Parking Event: Task<ParkingTicketResponseDTO> HandleParkingEventAsync(ParkVehicleRequestDTO request);
+│   │
+│   ├── VehicleService: Task<Vehicle> ResolveVehicleAsync(ParkVehicleRequestDTO dto);
+│   │   │
+│   │   ├── IVehicleRepository
+│   │   │   └── Find By License Plate
+│   │   │
+│   │   ├── Create Vehicle If Missing
+│   │   └── Update Vehicle Information If Necessary
+│   │
+│   ├── SpotAssignmentService: Task<ParkingSpot> FindAvailableSpotAsync(Vehicle vehicle);
+│   │   │
+│   │   ├── IParkingSpotRepository
+│   │   │   └── Retrieve Available Spots
+│   │   │
+│   │   ├── Search Floors
+│   │   ├── Search Parking Spots
+│   │   ├── ParkingSpot.AcceptableVehicle(vehicle)
+│   │   └── Return First Available Spot
+│   │
+│   ├── TicketService: Task<ParkingTicket> CreateTicketAsync(Vehicle vehicle, ParkingSpot parkingSpot, FeeStrategyType feeStrategyType)
+│   │   └── CreateTicket()
+│   │       ├── Assign Entry Time
+│   │       ├── Assign Vehicle
+│   │       ├── Assign Parking Spot
+│   │       └── Assign Fee Strategy
+│   │
+│   ├── Occupy Parking Spot: parkingSpot.Occupy()
+│   ├── SaveChangesAsync()
+│   └── Return Ticket DTO: ParkingMapper.ToResponse(parkingTicket)
+│
+├── Handle Vehicle Exit: Task<ParkingTicketResponseDTO> HandleVehicleExitEventAsync(int ticketId);
+│   │
+│   ├── ITicketRepository
+│   │   └── GetActiveTicketById()
+│   │
+│   ├── ParkingFeeService
+│   │   │
+│   │   ├── Select IFeeStrategy
+│   │   │   ├── HourlyFeeStrategy
+│   │   │   ├── DailyFeeStrategy
+│   │   │   └── FlatFeeStrategy
+│   │   │
+│   │   └── CalculateFee(duration)
+│   │
+│   ├── TicketService
+│   │   └── CloseTicket()
+│   │       ├── Assign Exit Time
+│   │       └── Assign Total Fee
+│   │
+│   ├── Free Parking Spot
+│   ├── SaveChangesAsync()
+│   └── Return Closed Ticket DTO
+│
+├── Get Active Tickets (Read Only): Task<IEnumerable<ParkingTicketResponseDTO>> GetActiveTicketsAsync();
+│   │
+│   ├── ITicketRepository
+│   │   └── GetActiveTickets()
+│   │
+│   └── Return Ticket DTO List
+│
+├── Get Ticket By Id (Read Only): Task<ParkingTicketResponseDTO> GetTicketByIdAsync(int ticketId);
+│   │
+│   ├── ITicketRepository
+│   │   └── GetById()
+│   │
+│   └── Return Ticket DTO
+│
+└── Get Vehicle History (Read Only): Task<IEnumerable<ParkingTicketResponseDTO>> GetVehicleHistoryAsync(string licensePlate);
+    │
+    ├── ITicketRepository
+    │   └── GetVehicleHistory(licensePlate)
+    │
+    └── Return Ticket DTO List
