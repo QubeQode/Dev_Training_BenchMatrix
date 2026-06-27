@@ -23,7 +23,7 @@ public class TicketService : ITicketService
         return await Task.FromResult(ticket);
     }
 
-    public void CloseTicket(
+    public Task CloseTicket(
         ParkingTicket parkingTicket,
         decimal totalFee
     )
@@ -35,5 +35,7 @@ public class TicketService : ITicketService
 
         parkingTicket.TimeOfConclusion = DateTime.UtcNow;
         parkingTicket.TotalFee = totalFee;
+
+        return Task.CompletedTask;
     }
 }
