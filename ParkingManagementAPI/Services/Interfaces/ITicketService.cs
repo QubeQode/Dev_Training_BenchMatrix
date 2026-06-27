@@ -10,7 +10,7 @@ public interface ITicketService
         FeeStrategyType feeStrategyType
     );
 
-    Task<ParkingTicket> CloseTicketAsync(
+    void CloseTicket(
         ParkingTicket parkingTicket,
         decimal totalFee
     );
