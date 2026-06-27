@@ -8,8 +8,6 @@ public interface IParkingSpotRepository
 {
     Task<IEnumerable<ParkingSpot>> GetAllAsync();
 
-    Task<ParkingSpot?> GetByIdAsync(int parkingSpotId);
-
     Task AddAsync(ParkingSpot parkingSpot);
 
     void Update(ParkingSpot parkingSpot);
