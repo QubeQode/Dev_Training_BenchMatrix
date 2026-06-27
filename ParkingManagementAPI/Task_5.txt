@@ -1,5 +1,5 @@
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-RELATIONSHIPS - MODEL ENTITIES
+RELATIONSHIPS + MODEL ENTITIES
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
 ParkingLot
@@ -180,6 +180,10 @@ ParkingService - Application Orchestrator
 │   ├── ITicketRepository
 │   │   └── GetActiveTicketById()
 │   │
+│   ├── TicketService
+│   │   └── CloseTicket()
+│   │       └── Assign Exit Time
+│   │
 │   ├── ParkingFeeService
 │   │   │
 │   │   ├── Select IFeeStrategy
@@ -191,7 +195,6 @@ ParkingService - Application Orchestrator
 │   │
 │   ├── TicketService
 │   │   └── CloseTicket()
-│   │       ├── Assign Exit Time
 │   │       └── Assign Total Fee
 │   │
 │   ├── Free Parking Spot
@@ -218,3 +221,73 @@ ParkingService - Application Orchestrator
     │   └── GetVehicleHistory(licensePlate)
     │
     └── Return Ticket DTO List
+
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+EXCEPTIONS + EXCEPTION HANDLER
+────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+Request
+│
+├── Controller
+│   │
+│   └── ParkingService
+│       │
+│       └── Throws Exception
+│
+▼
+CustomExceptionHandler
+│
+├── ParkingLotException
+│   │
+│   ├── FloorNotFoundException
+│   │   └── 404 Not Found
+│   │
+│   ├── ParkingLotNotFoundException
+│   │   └── 404 Not Found
+│   │
+│   ├── ParkingSpotNotFoundException
+│   │   └── 404 Not Found
+│   │
+│   ├── TicketNotFoundException
+│   │   └── 404 Not Found
+│   │
+│   ├── VehicleNotFoundException
+│   │   └── 404 Not Found
+│   │
+│   ├── InvalidVehicleTypeException
+│   │   └── 400 Bad Request
+│   │
+│   ├── VehicleDoesNotFitException
+│   │   └── 400 Bad Request
+│   │
+│   ├── ParkingFreeException
+│   │   └── 409 Conflict
+│   │
+│   ├── ParkingOccupiedException
+│   │   └── 409 Conflict
+│   │
+│   ├── VehicleAlreadyParkedException
+│   │   └── 409 Conflict
+│   │
+│   ├── TicketAlreadyClosedException
+│   │   └── 409 Conflict
+│   │
+│   └── NoAvailableParkingException
+│       └── 409 Conflict
+│
+├── AuthorizationException
+│   │
+│   ├── InvalidTokenException
+│   │   └── 401 Unauthorized
+│   │
+│   ├── ExpiredTokenException
+│   │   └── 401 Unauthorized
+│   │
+│   ├── InvalidCredentialsException
+│   │   └── 401 Unauthorized
+│   │
+│   └── InsufficientPermissionsException
+│       └── 403 Forbidden
+│
+└── Exception
+    └── 500 Internal Server Error
