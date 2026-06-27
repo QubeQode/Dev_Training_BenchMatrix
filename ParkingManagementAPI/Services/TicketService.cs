@@ -1,6 +1,5 @@
 using ParkingManagementAPI.Exceptions;
 using ParkingManagementAPI.Models;
-using ParkingManagementAPI.Repositories;
 
 namespace ParkingManagementAPI.Services;
 

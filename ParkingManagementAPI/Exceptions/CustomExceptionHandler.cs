@@ -38,8 +38,11 @@ public class CustomExceptionHandler : IExceptionHandler
             NoAvailableParkingException =>
                 (StatusCodes.Status409Conflict, "No Available Parking"),
             
+            TicketStillOpenException =>
+                (StatusCodes.Status409Conflict, "Ticket Is Still Open"),
+            
             TicketAlreadyClosedException =>
-                (StatusCodes.Status409Conflict, "Ticket Already Closed"),
+                (StatusCodes.Status409Conflict, "Ticket Is Already Closed"),
             
             VehicleAlreadyParkedException =>
                 (StatusCodes.Status409Conflict, "Vehicle Already Parked"),

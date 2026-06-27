@@ -10,7 +10,7 @@ public interface IParkingService
 
     Task<IEnumerable<ParkingTicketResponseDTO>> GetActiveTicketsAsync();
 
-    Task<ParkingTicketResponseDTO?> GetTicketByIdAsync(int ticketId);
+    Task<ParkingTicketResponseDTO> GetTicketByIdAsync(int ticketId);
 
     Task<IEnumerable<ParkingTicketResponseDTO>> GetVehicleHistoryAsync(string licensePlate);
 }
