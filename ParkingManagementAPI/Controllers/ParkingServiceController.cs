@@ -44,7 +44,7 @@ public class ParkingController : ControllerBase
     [AllowAnonymous]
     public async Task<ActionResult<IEnumerable<ParkingTicketResponseDTO>>> GetActiveTickets()
     {
-        var tickets = _parkingService.GetActiveTicketsAsync();
+        var tickets = await _parkingService.GetActiveTicketsAsync();
 
         return Ok(tickets);
     }

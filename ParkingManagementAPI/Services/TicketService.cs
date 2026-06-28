@@ -24,6 +24,7 @@ public class TicketService : ITicketService
 
     public Task CloseTicket(
         ParkingTicket parkingTicket,
+        DateTime exitTime,
         decimal totalFee
     )
     {
@@ -32,6 +33,7 @@ public class TicketService : ITicketService
             throw new TicketAlreadyClosedException(parkingTicket.ParkingTicketId);
         }
 
+        parkingTicket.TimeOfConclusion = exitTime;
         parkingTicket.TotalFee = totalFee;
 
         return Task.CompletedTask;

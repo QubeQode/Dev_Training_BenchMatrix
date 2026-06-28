@@ -12,6 +12,7 @@ public interface ITicketService
 
     Task CloseTicket(
         ParkingTicket parkingTicket,
+        DateTime exitTime,
         decimal totalFee
     );
 }

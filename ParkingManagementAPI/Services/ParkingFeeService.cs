@@ -12,13 +12,10 @@ public class ParkingFeeService : IParkingFeeService
         _feeStrategies = feeStrategies;
     }
 
-    public Task<decimal> CalculateFeeAsync(ParkingTicket ticket)
+    public Task<decimal> CalculateFeeAsync(ParkingTicket ticket, DateTime exitTime)
     {
-        DateTime conclusionTime = 
-            ticket.TimeOfConclusion 
-            ?? throw new TicketStillOpenException(ticket.ParkingTicketId);
 
-        var duration = conclusionTime - ticket.TimeOfIssuance;
+        var duration = exitTime - ticket.TimeOfIssuance;
 
         var strategy = _feeStrategies.First(s => s.StrategyType == ticket.FeeStrategyType);
 

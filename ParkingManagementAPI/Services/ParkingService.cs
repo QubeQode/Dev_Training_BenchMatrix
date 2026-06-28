@@ -66,11 +66,11 @@ public class ParkingService : IParkingService
             throw new TicketNotFoundException(ticketId);
         }
 
-        ticket.TimeOfConclusion = DateTime.UtcNow;
+        var exitTime = DateTime.UtcNow;
 
-        var fee = await _parkingFeeService.CalculateFeeAsync(ticket);
+        var fee = await _parkingFeeService.CalculateFeeAsync(ticket, exitTime);
 
-        await _ticketService.CloseTicket(ticket, fee);
+        await _ticketService.CloseTicket(ticket, exitTime, fee);
 
         ticket.ParkingSpot.FreeSpot();
 

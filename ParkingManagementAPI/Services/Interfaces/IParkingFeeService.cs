@@ -4,5 +4,5 @@ namespace ParkingManagementAPI.Services;
 
 public interface IParkingFeeService
 {
-    Task<decimal> CalculateFeeAsync(ParkingTicket ticket);
+    Task<decimal> CalculateFeeAsync(ParkingTicket ticket, DateTime exitTime);
 }

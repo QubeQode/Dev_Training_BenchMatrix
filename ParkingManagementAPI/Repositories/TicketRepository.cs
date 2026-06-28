@@ -28,6 +28,8 @@ public class TicketRepository : ITicketRepository
     {
         return await _context.ParkingTickets
             .Include(t => t.ParkingSpot)
+                .ThenInclude(s => s.Floor)
+            .Include(t => t.Vehicle)
             .FirstOrDefaultAsync(t =>
                 t.ParkingTicketId == ticketId &&
                 t.TimeOfConclusion == null

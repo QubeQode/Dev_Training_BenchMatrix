@@ -5,15 +5,20 @@ namespace ParkingManagementAPI.Data;
 
 public class ParkingLotDbContext : DbContext
 {
-    public DbSet<Vehicle> Vehicles { get; set; }
+    public ParkingLotDbContext
+        (DbContextOptions<ParkingLotDbContext> options): base(options)
+    {
+    }
 
-    public DbSet<ParkingTicket> ParkingTickets { get; set; }
+    public DbSet<Vehicle> Vehicles => Set<Vehicle>();
 
-    public DbSet<ParkingSpot> ParkingSpots { get; set; }
+    public DbSet<ParkingTicket> ParkingTickets => Set<ParkingTicket>();
 
-    public DbSet<Floor> Floors { get; set; }
+    public DbSet<ParkingSpot> ParkingSpots => Set<ParkingSpot>();
 
-    public DbSet<ParkingLot> ParkingLots { get; set; }
+    public DbSet<Floor> Floors => Set<Floor>();
+
+    public DbSet<ParkingLot> ParkingLots => Set<ParkingLot>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -168,7 +173,7 @@ public class ParkingLotDbContext : DbContext
             new
             {
                 ParkingSpotId = 6,
-                ParkingSpotName = "B01",
+                ParkingSpotName = "B02",
                 FloorId = 2,
                 IsOccupied = false
             }  
