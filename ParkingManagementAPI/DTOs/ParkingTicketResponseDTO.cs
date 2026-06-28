@@ -1,4 +1,3 @@
-using System.ComponentModel.DataAnnotations;
 using ParkingManagementAPI.Models;
 
 namespace ParkingManagementAPI.DTOs;

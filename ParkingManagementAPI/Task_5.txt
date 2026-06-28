@@ -86,6 +86,13 @@ ParkVehicleRequestDTO - references Enum VehicleType { Motorcycle, Car, Truck }
 ├── VehicleType VehicleType [Required]
 └── FeeStrategyType [Required]
 
+LoginRequestDTO
+├── string Email [Required]
+└── string Password [Required]
+
+LoginResponseDTO - { get; init; }
+└── string Token
+
 ParkingMapper
 │
 ├── ToVehicle(ParkVehicleRequestDTO): return dto.VehicleType switch
@@ -222,6 +229,48 @@ ParkingService - Application Orchestrator
     │
     └── Return Ticket DTO List
 
+AuthService
+│
+├── Dependencies
+│   │
+│   └── IConfiguration
+│
+└── LoginAsync(LoginRequestDTO request)
+    │
+    ├── Validate Credentials
+    │   │
+    │   ├── Email == "test@test.com"
+    │   └── Password == "password123"
+    │
+    ├── Invalid Credentials
+    │   └── InvalidCredentialsException
+    │
+    ├── Create Claims
+    │   │
+    │   ├── Claim("userId", "1")
+    │   ├── Claim(ClaimTypes.Email)
+    │   └── Claim(ClaimTypes.Role)
+    │
+    ├── Retrieve JWT Secret Key
+    │   └── IConfiguration["Jwt:SecretKey"]
+    │
+    ├── Create SymmetricSecurityKey
+    │
+    ├── Create SigningCredentials
+    │   └── HmacSha256
+    │
+    ├── Create JwtSecurityToken
+    │   │
+    │   ├── Claims
+    │   ├── Expiration Time
+    │   └── Signing Credentials
+    │
+    ├── JwtSecurityTokenHandler
+    │   └── WriteToken()
+    │
+    └── Return LoginResponseDTO
+        └── Token
+
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 EXCEPTIONS + EXCEPTION HANDLER
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
@@ -357,3 +406,26 @@ ParkingController
     │
     └── Return 200 OK
         └── IEnumerable<ParkingTicketResponseDTO>
+
+AuthController
+│
+├── Dependencies
+│   │
+│   └── IAuthService
+│
+└── POST api/auth/login
+    │
+    ├── Receive LoginRequestDTO
+    │
+    ├── Model Validation
+    │
+    ├── AuthService.LoginAsync()
+    │
+    ├── Successful Login
+    │   └── 200 OK
+    │       └── LoginResponseDTO
+    │
+    └── Invalid Credentials
+        └── InvalidCredentialsException
+            └── Global Exception Handler
+                └── 401 Unauthorized

@@ -8,7 +8,7 @@ public class TicketRepository : ITicketRepository
 {
     private readonly ParkingLotDbContext _context;
 
-    TicketRepository(ParkingLotDbContext context)
+    public TicketRepository(ParkingLotDbContext context)
     {
         _context = context;
     }
