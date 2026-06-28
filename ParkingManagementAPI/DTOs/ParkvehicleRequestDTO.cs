@@ -13,6 +13,7 @@ public enum VehicleType
 public class ParkVehicleRequestDTO
 {
     [Required]
+    [StringLength(8)]
     public string LicensePlate { get; set; } = string.Empty;
 
     public string Make { get; set; } = string.Empty;

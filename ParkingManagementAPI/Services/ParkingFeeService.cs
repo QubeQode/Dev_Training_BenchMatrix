@@ -3,7 +3,7 @@ using ParkingManagementAPI.Models;
 
 namespace ParkingManagementAPI.Services;
 
-public class ParkingFeeService
+public class ParkingFeeService : IParkingFeeService
 {
     private readonly IEnumerable<IFeeStrategy> _feeStrategies;
 
@@ -21,6 +21,11 @@ public class ParkingFeeService
         var duration = conclusionTime - ticket.TimeOfIssuance;
 
         var strategy = _feeStrategies.First(s => s.StrategyType == ticket.FeeStrategyType);
+
+        if (strategy is null)
+        {
+            throw new InvalidFeeStrategyTypeException(ticket.FeeStrategyType);
+        }
 
         decimal fee = strategy.CalculateFee(duration);
 
