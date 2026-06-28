@@ -52,6 +52,9 @@ public class CustomExceptionHandler : IExceptionHandler
 
             InvalidVehicleTypeException =>
                 (StatusCodes.Status400BadRequest, "Vehicle Type Does Not Exist"),
+
+            InvalidCredentialsException =>
+                (StatusCodes.Status401Unauthorized, "Invalid Credentials Provided"),
             
             _ =>
                 (StatusCodes.Status500InternalServerError, "Internal Server Error")

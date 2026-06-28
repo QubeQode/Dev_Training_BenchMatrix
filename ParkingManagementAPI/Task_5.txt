@@ -293,9 +293,67 @@ CustomExceptionHandler
     └── 500 Internal Server Error
 
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-MIDDLEWARE
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
-
-────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 CONTROLLERS
 ────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+
+ParkingController
+│
+├── POST api/parking/park
+│   │
+│   ├── [Authorize]
+│   │
+│   ├── Accept ParkVehicleRequestDTO
+│   │
+│   ├── Model Validation
+│   │
+│   ├── IParkingService
+│   │   └── HandleParkingEventAsync(request)
+│   │
+│   └── Return 201 Created
+│       └── ParkingTicketResponseDTO
+│
+├── PUT api/parking/exit/{ticketId}
+│   │
+│   ├── [Authorize]
+│   │
+│   ├── Route Parameter: ticketId
+│   │
+│   ├── IParkingService
+│   │   └── HandleVehicleExitEventAsync(ticketId)
+│   │
+│   └── Return 200 OK
+│       └── ParkingTicketResponseDTO
+│
+├── GET api/parking/active
+│   │
+│   ├── Public Endpoint
+│   │
+│   ├── IParkingService
+│   │   └── GetActiveTicketsAsync()
+│   │
+│   └── Return 200 OK
+│       └── IEnumerable<ParkingTicketResponseDTO>
+│
+├── GET api/parking/ticket/{ticketId}
+│   │
+│   ├── Public Endpoint
+│   │
+│   ├── Route Parameter: ticketId
+│   │
+│   ├── IParkingService
+│   │   └── GetTicketByIdAsync(ticketId)
+│   │
+│   └── Return 200 OK
+│       └── ParkingTicketResponseDTO
+│
+└── GET api/parking/history/{licensePlate}
+    │
+    ├── Public Endpoint
+    │
+    ├── Route Parameter: licensePlate
+    │
+    ├── IParkingService
+    │   └── GetVehicleHistoryAsync(licensePlate)
+    │
+    └── Return 200 OK
+        └── IEnumerable<ParkingTicketResponseDTO>
