@@ -23,6 +23,7 @@ public static class TaskMapper
     {
         return new TaskResponseDTO
         {
+            Id = task.Id,
             Name = task.Name,
             Description = task.Description,
             Completed = task.Completed,
