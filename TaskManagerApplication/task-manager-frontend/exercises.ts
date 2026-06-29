@@ -24,6 +24,6 @@ const generateId = (previousId: number): number => {
 const calculateDateDiff = (completeDate: Date, createDate: Date): number =>
      completeDate.getTime() - createDate.getTime();
 
-function firstItem<T> (array: T[]): T | undefined {
+const firstItem =  <T>(array: T[]): T | undefined {
     return array[0];
 }
