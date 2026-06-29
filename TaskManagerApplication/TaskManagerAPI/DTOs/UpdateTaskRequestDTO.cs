@@ -3,25 +3,20 @@ using TaskManagerAPI.Models;
 
 namespace TaskManagerAPI.DTOs;
 
-public class TaskRequestDTO
+public class UpdateTaskRequestDTO
 {
-    [Required]
-    public int Id { get; set; }
-
     [Required]
     public string Name { get; set; } = string.Empty;
 
     [Required]
     public string Description { get; set; } = string.Empty;
 
+    [Required]
     public bool Completed { get; set; }
 
-    [EnumDataType(typeof(Priority))]
+    [Required]
     public Priority Priority { get; set; }
 
     [Required]
     public DateOnly DueDate { get; set; }
-
-    [Required]
-    public DateOnly CreatedAt { get; set; }
 }

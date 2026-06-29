@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace LibraryManagementAPI.Middleware;
+namespace TaskManagerAPI.Middleware;
 
 public class RequestLoggingMiddleware
 {

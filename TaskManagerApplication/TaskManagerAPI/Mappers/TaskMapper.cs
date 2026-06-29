@@ -5,18 +5,24 @@ namespace TaskManagerAPI.Mappers;
 
 public static class TaskMapper
 {
-    public static TaskEntity ToEntity(TaskRequestDTO dto)
+    public static TaskEntity ToEntity(CreateTaskRequestDTO dto)
     {
         return new TaskEntity
         {
-            Id = dto.Id,
             Name = dto.Name,
             Description = dto.Description,
-            Completed = dto.Completed,
             Priority = dto.Priority,
-            DueDate = dto.DueDate,
-            CreatedAt = dto.CreatedAt
+            DueDate = dto.DueDate
         };
+    }
+
+    public static void UpdateEntity(TaskEntity task, UpdateTaskRequestDTO dto)
+    {
+        task.Name = dto.Name;
+        task.Description = dto.Description;
+        task.Completed = dto.Completed;
+        task.Priority = dto.Priority;
+        task.DueDate = dto.DueDate;
     }
 
     public static TaskResponseDTO ToResponse(TaskEntity task)

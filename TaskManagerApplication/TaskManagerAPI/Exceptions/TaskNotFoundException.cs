@@ -1,6 +1,6 @@
 namespace TaskManagerAPI.Exceptions;
 public class TaskNotFoundException : TaskException
 {
-    public TaskNotFoundException(string taskName) 
-        : base($"{taskName} task was not found."){}
+    public TaskNotFoundException(int taskId) 
+        : base($"Task {taskId} was not found."){}
 }

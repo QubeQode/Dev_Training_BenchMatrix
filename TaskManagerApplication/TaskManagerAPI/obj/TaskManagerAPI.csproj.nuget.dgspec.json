@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\TaskManagerApplication\\TaskManagerAPI\\TaskManagerAPI.csproj": {}
+    "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\TaskManagerApplication\\TaskManagerAPI\\TaskManagerAPI.csproj": {}
   },
   "projects": {
-    "c:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\TaskManagerApplication\\TaskManagerAPI\\TaskManagerAPI.csproj": {
+    "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\TaskManagerApplication\\TaskManagerAPI\\TaskManagerAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\TaskManagerApplication\\TaskManagerAPI\\TaskManagerAPI.csproj",
+        "projectUniqueName": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\TaskManagerApplication\\TaskManagerAPI\\TaskManagerAPI.csproj",
         "projectName": "TaskManagerAPI",
-        "projectPath": "c:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\TaskManagerApplication\\TaskManagerAPI\\TaskManagerAPI.csproj",
+        "projectPath": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\TaskManagerApplication\\TaskManagerAPI\\TaskManagerAPI.csproj",
         "packagesPath": "C:\\Users\\moham\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\TaskManagerApplication\\TaskManagerAPI\\obj\\",
+        "outputPath": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\TaskManagerApplication\\TaskManagerAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\moham\\AppData\\Roaming\\NuGet\\NuGet.Config"

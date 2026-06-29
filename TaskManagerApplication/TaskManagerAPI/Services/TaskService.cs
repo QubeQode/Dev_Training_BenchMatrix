@@ -14,19 +14,19 @@ public class TaskService : ITaskService
         return Task.FromResult(tasks);
     }
 
-    public Task<TaskResponseDTO> GetTaskByIdAsync(int taskId, TaskRequestDTO dto)
+    public Task<TaskResponseDTO> GetTaskByIdAsync(int taskId)
     {
         var task = InMemoryStore.Tasks.FirstOrDefault(t => t.Id == taskId);
 
         if (task is null)
         {
-            throw new TaskNotFoundException(dto.Name);
+            throw new TaskNotFoundException(taskId);
         }
 
         return Task.FromResult(TaskMapper.ToResponse(task));
     }
 
-    public Task<TaskResponseDTO> CreateTaskAsync(TaskRequestDTO dto)
+    public Task<TaskResponseDTO> CreateTaskAsync(CreateTaskRequestDTO dto)
     {
         var task = TaskMapper.ToEntity(dto);
 
@@ -36,34 +36,32 @@ public class TaskService : ITaskService
         
         task.CreatedAt = DateOnly.FromDateTime(DateTime.UtcNow);
 
+        InMemoryStore.Tasks.Add(task);
+
         return Task.FromResult(TaskMapper.ToResponse(task));
     }
 
-    public Task<TaskResponseDTO> UpdateTaskAsync(int taskId, TaskRequestDTO dto)
+    public Task<TaskResponseDTO> UpdateTaskAsync(int taskId, UpdateTaskRequestDTO dto)
     {
         var task = InMemoryStore.Tasks.FirstOrDefault(t => t.Id == taskId);
 
         if (task is null)
         {
-            throw new TaskNotFoundException(dto.Name);
+            throw new TaskNotFoundException(taskId);
         }
 
-        task.Name = dto.Name;
-        task.Description = dto.Description;
-        task.Completed = dto.Completed;
-        task.Priority = dto.Priority;
-        task.DueDate = dto.DueDate;
+        TaskMapper.UpdateEntity(task, dto);
 
         return Task.FromResult(TaskMapper.ToResponse(task));
     }
 
-    public Task<TaskResponseDTO> ToggleTaskAsync(int taskId, TaskRequestDTO dto)
+    public Task<TaskResponseDTO> ToggleTaskAsync(int taskId)
     {
         var task = InMemoryStore.Tasks.FirstOrDefault(t => t.Id == taskId);
 
         if (task is null)
         {
-            throw new TaskNotFoundException(dto.Name);
+            throw new TaskNotFoundException(taskId);
         }
 
         task.Completed = !task.Completed;
@@ -71,13 +69,13 @@ public class TaskService : ITaskService
         return Task.FromResult(TaskMapper.ToResponse(task));
     }
 
-    public Task DeleteTaskAsync(int taskId, TaskRequestDTO dto)
+    public Task DeleteTaskAsync(int taskId)
     {
         var task = InMemoryStore.Tasks.FirstOrDefault(t => t.Id == taskId);
 
         if (task is null)
         {
-            throw new TaskNotFoundException(dto.Name);
+            throw new TaskNotFoundException(taskId);
         }
 
         InMemoryStore.Tasks.Remove(task);

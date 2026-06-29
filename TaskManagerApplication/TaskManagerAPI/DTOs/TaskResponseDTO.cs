@@ -6,7 +6,7 @@ namespace TaskManagerAPI.DTOs;
 public class TaskResponseDTO
 {
     public int Id { get; set; }
-    
+       
     public string Name { get; init; } = string.Empty;
 
     public string Description { get; init; } = string.Empty;

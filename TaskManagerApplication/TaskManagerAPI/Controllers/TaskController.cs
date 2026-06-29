@@ -6,11 +6,11 @@ namespace TaskManagerAPI.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class BooksController : ControllerBase
+public class TaskController : ControllerBase
 {
     private readonly ITaskService _taskService;
 
-    public BooksController(
+    public TaskController(
         ITaskService taskService
     )
     {
@@ -26,19 +26,15 @@ public class BooksController : ControllerBase
     }
     
     [HttpGet("{id:int}")]
-    public async Task<ActionResult<TaskResponseDTO>> GetTaskById
-    (
-        int id, 
-        [FromBody] TaskRequestDTO dto
-    )
+    public async Task<ActionResult<TaskResponseDTO>> GetTaskById (int id)
     {
-        var task = await _taskService.GetTaskByIdAsync(id, dto);
+        var task = await _taskService.GetTaskByIdAsync(id);
 
         return Ok(task);
     }
 
     [HttpPost]
-    public async Task<ActionResult<TaskResponseDTO>> CreateTask ([FromBody] TaskRequestDTO dto)
+    public async Task<ActionResult<TaskResponseDTO>> CreateTask ([FromBody] CreateTaskRequestDTO dto)
     {
         var createdTask = await _taskService.CreateTaskAsync(dto);
 
@@ -49,11 +45,11 @@ public class BooksController : ControllerBase
         );
     }
 
-    [HttpPut("{id: int}")]
+    [HttpPut("{id:int}")]
     public async Task<ActionResult<TaskResponseDTO>> UpdateTask
     (
         int id,
-        [FromBody] TaskRequestDTO dto
+        [FromBody] UpdateTaskRequestDTO dto
     )
     {
         var updatedTask = await _taskService.UpdateTaskAsync(id, dto);
@@ -61,26 +57,18 @@ public class BooksController : ControllerBase
         return Ok(updatedTask);
     }
 
-    [HttpPatch("{id: int}/toggle")]
-    public async Task<ActionResult<TaskResponseDTO>> ToggleTask
-    (
-        int id,
-        [FromBody] TaskRequestDTO dto
-    )
+    [HttpPatch("{id:int}/toggle")]
+    public async Task<ActionResult<TaskResponseDTO>> ToggleTask (int id)
     {
-        var updatedTask = await _taskService.ToggleTaskAsync(id, dto);
+        var updatedTask = await _taskService.ToggleTaskAsync(id);
 
         return Ok(updatedTask);
     }
 
-    [HttpDelete("{id: int}")]
-    public async Task<IActionResult> DeleteTask
-    (
-        int id,
-        [FromBody] TaskRequestDTO dto
-    )
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteTask (int id)
     {
-        await _taskService.DeleteTaskAsync(id, dto);
+        await _taskService.DeleteTaskAsync(id);
 
         return NoContent();
     }
