@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementTask\\LibraryManagementTask.csproj",
+      "projectUniqueName": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\LibraryManagementTask\\LibraryManagementTask.csproj",
       "projectName": "LibraryManagementTask",
-      "projectPath": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementTask\\LibraryManagementTask.csproj",
+      "projectPath": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\LibraryManagementTask\\LibraryManagementTask.csproj",
       "packagesPath": "C:\\Users\\moham\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev Training\\Assigned_Work\\LibraryManagementTask\\obj\\",
+      "outputPath": "C:\\Users\\moham\\Documents\\BenchMatrix\\Dev_Training\\Assigned_Work\\LibraryManagementTask\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\moham\\AppData\\Roaming\\NuGet\\NuGet.Config"
