@@ -15,10 +15,12 @@ interface Task {
 }
 
 const generateId = (previousId: number): number => {
-    if (previousId = 0)
+    if (previousId = 0) {
         return 0;
-    else
-    return previousId + 1;
+    }
+    else {
+        return previousId + 1;
+    }
 };
 
 const calculateDateDiff = (completeDate: Date, createDate: Date): number =>
