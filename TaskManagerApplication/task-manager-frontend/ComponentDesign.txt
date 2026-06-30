@@ -1,0 +1,11 @@
+AppComponent
+│
+├── TaskCreateFormComponent
+│
+└── TaskListComponent
+     │
+     ├── TaskItemComponent
+     │    ├── CompleteToggleComponent 
+     │    └── PriorityBadgeComponent
+     │
+     └── TaskItemComponent

@@ -15,8 +15,8 @@ interface Task {
 }
 
 const generateId = (previousId: number): number => {
-    if (previousId = 0) {
-        return 0;
+    if (previousId == 0) {
+        return 1;
     }
     else {
         return previousId + 1;
@@ -27,3 +27,6 @@ const calculateDateDiff = (completeDate: Date, createDate: Date): number =>
      completeDate.getTime() - createDate.getTime();
 
 const firstItem =  <T>(array: T[]): T | undefined => array[0];
+
+console.log(generateId(0));
+console.log(generateId(1));
