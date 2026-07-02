@@ -1,0 +1,46 @@
+<div class="task-item">
+    <h3>{{ task.name }}</h3>
+    <p>{{ task.description }}</p>
+    <p>
+        <strong>Created:</strong>
+        {{ task.createdAt | date:'mediumDate' }}
+    </p>
+    <p>
+        <strong>Due:</strong>
+        {{ task.dueDate | date:'mediumDate' }}
+    </p>
+    <div class="priority-section">
+        <p><strong>Priority: {{ getPriorityLabel() }}</strong></p>
+        <button
+            type="button"
+            [class.active]="isPrioritySelected(Priority.Low)"
+            (click)="setPriority(Priority.Low)">
+            Low
+        </button>
+        <button
+            type="button"
+            [class.active]="isPrioritySelected(Priority.Medium)"
+            (click)="setPriority(Priority.Medium)">
+            Medium
+        </button>
+        <button
+            type="button"
+            [class.active]="isPrioritySelected(Priority.High)"
+            (click)="setPriority(Priority.High)">
+            High
+        </button>
+    </div>
+    <div class="completion-section">
+        <button type="button" (click)="toggleCompleted()">
+            {{ task.completed ? 'Mark Incomplete' : 'Mark Complete' }}
+        </button>
+
+        <span>
+            Status: {{ task.completed ? 'Completed' : 'Incomplete' }}
+        </span>
+
+    </div>
+    <button type="button" (click)="deleteTask()">
+        Delete Task
+    </button>
+</div>

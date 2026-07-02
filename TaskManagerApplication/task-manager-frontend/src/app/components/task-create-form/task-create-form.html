@@ -1,0 +1,36 @@
+<h2>Create Task</h2>
+
+<div>
+    <label>Task Name: </label>
+    <input type="text" [(ngModel)]="taskName">
+</div>
+
+<div>
+    <label>Description: </label>
+    <textarea [(ngModel)]="taskDescription">
+    </textarea>
+</div>
+
+<div>
+    <label>Due Date: </label>
+    <input type="date" [(ngModel)]="dueDate">
+</div>
+
+<div>
+    <label>Priority: </label>
+    <select [(ngModel)]="priority">
+        <option [ngValue]="Priority.Low">
+            Low
+        </option>
+        <option [ngValue]="Priority.Medium">
+            Medium
+        </option>
+        <option [ngValue]="Priority.High">
+            High
+        </option>
+    </select>
+</div>
+
+<button type="button" (click)="createTask()">
+    Create Task
+</button>

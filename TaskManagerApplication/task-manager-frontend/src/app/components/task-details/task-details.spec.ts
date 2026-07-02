@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CompleteToggle } from './complete-toggle';
+import { TaskDetails } from './task-details';
 
-describe('CompleteToggle', () => {
-  let component: CompleteToggle;
-  let fixture: ComponentFixture<CompleteToggle>;
+describe('TaskDetails', () => {
+  let component: TaskDetails;
+  let fixture: ComponentFixture<TaskDetails>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CompleteToggle],
+      imports: [TaskDetails],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(CompleteToggle);
+    fixture = TestBed.createComponent(TaskDetails);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });
