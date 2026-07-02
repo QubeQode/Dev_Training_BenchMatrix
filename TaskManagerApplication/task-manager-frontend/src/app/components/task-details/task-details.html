@@ -1,1 +1,100 @@
-<p>task-details works!</p>
+<h2>Edit Task</h2>
+<h3>
+    <a [routerLink]="['/tasks']">
+        < Go Back
+    </a>
+</h3>
+@if (task$ | async; as task) {
+    @if (errorMessage) {
+        <p>{{ errorMessage }}</p>
+    } @else if (!task) {
+        <p>Task not found.</p>
+    } @else {
+        <form [formGroup]="taskForm" (ngSubmit)="saveTask(task.id)">
+            <div>
+                <label>Task Name</label>
+                <input type="text" formControlName="name">
+                @if (nameControl.touched && nameControl.hasError('required')) {
+                    <small>
+                        Task name is required.
+                    </small>
+                }
+                @if (nameControl.touched && nameControl.hasError('maxlength')) {
+                    <small>
+                        Task name cannot exceed 100 characters.
+                    </small>
+                }
+            </div>
+    
+            <div>
+                <label>Description</label>
+                <textarea formControlName="description"></textarea>
+                @if (nameControl.touched && nameControl.hasError('required')) {
+                    <small>
+                        Task description is required.
+                    </small>
+                }
+                @if (nameControl.touched && nameControl.hasError('maxlength')) {
+                    <small>
+                        Task description cannot exceed 400 characters.
+                    </small>
+                }
+            </div>
+    
+            <div>
+                <label>Due Date</label>
+                <input type="date" formControlName="dueDate">
+                @if (nameControl.touched && nameControl.hasError('required')) {
+                    <small>
+                        Due date is required.
+                    </small>
+                }
+            </div>
+    
+            <div>
+                <label>Priority</label>
+                <select formControlName="priority">
+                    <option [ngValue]="Priority.Low">
+                        Low
+                    </option>
+                    <option [ngValue]="Priority.Medium">
+                        Medium
+                    </option>
+                    <option [ngValue]="Priority.High">
+                        High
+                    </option>
+                </select>
+                @if (priorityControl.touched && priorityControl.hasError('required')) {
+                    <small>
+                        Priority is required.
+                    </small>
+                }
+            </div>
+    
+            <div class="completion-section">
+                <button type="button" (click)="toggleCompleted()">
+                    {{ completedControl.value ? 'Mark Incomplete' : 'Mark Complete' }}
+                </button>
+                <span>
+                    Status: {{ completedControl.value ? 'Completed' : 'Incomplete' }}
+                </span>
+                @if (priorityControl.touched && priorityControl.hasError('required')) {
+                    <small>
+                        Completion status is required.
+                    </small>
+                }
+            </div>
+    
+            <button type="submit" [disabled]="taskForm.invalid">
+                Save Changes
+            </button>
+            @if (saveMessage) {
+                <small>
+                    {{ saveMessage }}
+                </small>
+            }
+        </form>
+    }
+} @else {
+    <p>Loading Task...</p>
+}

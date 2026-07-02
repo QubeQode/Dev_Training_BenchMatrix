@@ -1,5 +1,9 @@
 <div class="task-item">
-    <h3>{{ task.name }}</h3>
+    <h3>
+        <a [routerLink]="['/tasks', task.id]">
+            {{ task.name }}
+        </a>
+    </h3>
     <p>{{ task.description }}</p>
     <p>
         <strong>Created:</strong>

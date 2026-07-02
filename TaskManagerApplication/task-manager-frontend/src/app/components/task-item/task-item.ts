@@ -7,11 +7,12 @@ import {
 import { DatePipe } from '@angular/common';
 import { Priority } from "../../models/task-model";
 import { TaskResponseDTO } from '../../models/task-response-dto';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-task-item',
   templateUrl: './task-item.html',
-  imports: [DatePipe],
+  imports: [DatePipe, RouterLink],
   styleUrl: './task-item.css'
 })
 
