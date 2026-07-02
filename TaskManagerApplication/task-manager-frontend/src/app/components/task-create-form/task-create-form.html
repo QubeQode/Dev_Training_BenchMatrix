@@ -18,12 +18,12 @@
     <div>
         <label>Description</label>
         <textarea formControlName="description"></textarea>
-        @if (nameControl.touched && nameControl.hasError('required')) {
+        @if (descriptionControl.touched && descriptionControl.hasError('required')) {
             <small>
                 Task description is required.
             </small>
         }
-        @if (nameControl.touched && nameControl.hasError('maxlength')) {
+        @if (descriptionControl.touched && descriptionControl.hasError('maxlength')) {
             <small>
                 Task description cannot exceed 400 characters.
             </small>
@@ -33,7 +33,7 @@
     <div>
         <label>Due Date</label>
         <input type="date" formControlName="dueDate">
-        @if (nameControl.touched && nameControl.hasError('required')) {
+        @if (dueDateControl.touched && dueDateControl.hasError('required')) {
             <small>
                 Due date is required.
             </small>

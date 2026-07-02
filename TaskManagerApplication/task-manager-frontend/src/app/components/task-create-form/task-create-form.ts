@@ -63,6 +63,14 @@ export class TaskCreateForm {
     return this.taskForm.controls.name;
   }
 
+  get descriptionControl() {
+    return this.taskForm.controls.description;
+  }
+
+  get dueDateControl() {
+    return this.taskForm.controls.dueDate;
+  }
+
   get priorityControl() {
     return this.taskForm.controls.priority;
   }
